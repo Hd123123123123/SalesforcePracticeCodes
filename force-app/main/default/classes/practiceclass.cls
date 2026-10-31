@@ -46,6 +46,13 @@ public with sharing class practiceclass {
         delete acc ;
         
     }
+
+
+    public static List<Contact> getContacts(String lastName){
+
+       return [SELECT Id, FristName, LastName FROM Contact WHERE LastName  Like : '%' + lastName +'%' ];
+
+    }
     
     
     

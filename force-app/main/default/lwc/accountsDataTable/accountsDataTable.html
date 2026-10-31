@@ -1,0 +1,38 @@
+<template>
+
+    <lightning-card title="Accounts Data Table">
+
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+
+            <template for:each={AccountRecords} for:item = 'itm'>
+
+                <tr key = {itm.Id}>
+                    <td>{itm.Id}</td>
+                    <td>{itm.Name}</td>
+                </tr>
+
+            
+            </template>
+            
+            <tr>
+                <td><lightning-button label ='Next' onclick={handleOffset}></lightning-button></td>
+            </tr>
+        </table>
+
+    </lightning-card>
+
+    <lightning-card title='Child Component'>
+
+        <c-my-child-com lwc:ref = 'mychild1'></c-my-child-com>
+
+        <h1>'Current Record Id : '  {recordId} </h1>
+         <h1>'Current Record Object api name : '  {objectApiName} </h1>
+         <h1>'current user id :' {userId}</h1>
+
+    </lightning-card>
+
+</template>

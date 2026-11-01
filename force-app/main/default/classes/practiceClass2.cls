@@ -43,5 +43,37 @@ public with sharing class practiceClass2 {
         }
          
     }
+
+
+
+    @future
+    public static void updateAmountOnAccount(Set<Id> OpportunityIds){
+
+        Set<Id> accountIds = new Set<Id>();
+
+        for(Opportunity op : [SELECT Id, AccountId FROM Opportunity WHERE Id IN : OpportunityIds AND AccountId != NULL]){
+            accountIds.add(op.AccountId);
+        }
+
+        if(!accountIds.isEmpty()){
+            List<Account> finalUpdatedAccount = new List<Account>();
+            for(AggregateResult res : [SELECT SUM(Amount)totalAmount, AccountId  FROM Opportunity WHERE AccountId IN : accountIds AND Amount != null AND AccountId != null GROUP BY AccountId]){
+
+                Account ac = new Account();
+                ac.Id = (Id) res.get('AccountId');
+                ac.Description = String.valueOf(res.get('totalAmount'));
+
+                System.debug('Ac Rec =>' + ac);
+                
+                finalUpdatedAccount.add(ac);
+            }
+
+            if(!finalUpdatedAccount.isEmpty()){
+                UPDATE finalUpdatedAccount;
+            }
+        }
+        
+        
+    } 
     
 }
